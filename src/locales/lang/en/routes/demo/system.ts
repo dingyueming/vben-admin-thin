@@ -9,4 +9,5 @@ export default {
 
   menu: 'Menu management',
   role: 'Role management',
+  security:'Security management'
 };

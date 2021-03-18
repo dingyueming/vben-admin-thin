@@ -1,6 +1,7 @@
 import type { AppRouteModule } from '/@/router/types';
 
 import { LAYOUT } from '/@/router/constant';
+import { t } from '/@/hooks/web/useI18n';
 
 const system: AppRouteModule = {
   path: '/system',
@@ -9,7 +10,7 @@ const system: AppRouteModule = {
   redirect: '/system/user',
   meta: {
     icon: 'ant-design:setting-outlined',
-    title: '系统管理',
+    title: t('routes.demo.system.moduleName'),
   },
   children: [
     {
@@ -17,8 +18,9 @@ const system: AppRouteModule = {
       name: 'user',
       component: () => import('/@/views/sys/user/index.vue'),
       meta: {
-        title: '用户管理',
+        title: t('routes.demo.system.account'),
         affix: false,
+        securitySign:'user.service.list',
         icon: 'ant-design:user-outlined',
       },
     },
@@ -27,8 +29,9 @@ const system: AppRouteModule = {
       name: 'role',
       component: () => import('/@/views/sys/role/index.vue'),
       meta: {
-        title: '角色管理',
+        title: t('routes.demo.system.role'),
         affix: false,
+        securitySign:'role.service.list',
         icon: 'ant-design:trademark-outlined',
       },
     },
@@ -37,9 +40,10 @@ const system: AppRouteModule = {
       name: 'security',
       component: () => import('/@/views/sys/security/index.vue'),
       meta: {
-        title: '权限管理',
+        title: t('routes.demo.system.security'),
         affix: false,
-        icon: 'ant-design:setting-outlined',
+        securitySign:'security.service.list',
+        icon: 'ant-design:security-scan-outlined',
       },
     },
   ],

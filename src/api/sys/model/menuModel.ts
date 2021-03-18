@@ -1,4 +1,4 @@
-import { RouteMeta } from '/@/router/types';
+import { RouteMeta,Security } from '/@/router/types';
 export interface RouteItem {
   path: string;
   component: any;
@@ -18,6 +18,18 @@ export interface getMenuListByIdParams {
 }
 
 /**
+ * @description: Get security interface
+ */
+export interface getSecurityListByIdParams {
+  id: number | string;
+}
+
+/**
  * @description: Get menu return value
  */
 export type getMenuListByIdParamsResultModel = RouteItem[];
+
+/**
+ * @description: Get security return value
+ */
+ export type getSecurityListByIdParamsResultModel = Security[];

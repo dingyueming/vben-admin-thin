@@ -11,7 +11,7 @@ import { userStore } from '/@/store/modules/user';
 
 import { asyncRoutes } from '/@/router/routes';
 import { filter } from '/@/utils/helper/treeHelper';
-import { toRaw } from 'vue';
+// import { toRaw } from 'vue';
 import { getMenuListById } from '/@/api/sys/menu';
 
 import { transformObjToRoute } from '/@/router/helper/routeHelper';
@@ -86,17 +86,21 @@ class Permission extends VuexModule {
   async buildRoutesAction(id?: number | string): Promise<AppRouteRecordRaw[]> {
     const { t } = useI18n();
     let routes: AppRouteRecordRaw[] = [];
-    const roleList = toRaw(userStore.getRoleListState);
+    // const roleList = toRaw(userStore.getRoleListState);
 
     const { permissionMode = PermissionModeEnum.ROLE } = appStore.getProjectConfig;
 
     // role permissions
     if (permissionMode === PermissionModeEnum.ROLE) {
+      let securityList = userStore.getSecurityListState;
       routes = filter(asyncRoutes, (route) => {
         const { meta } = route as AppRouteRecordRaw;
-        const { roles } = meta || {};
-        if (!roles) return true;
-        return roleList.some((role) => roles.includes(role));
+        // const { roles } = meta || {};
+        // if (!roles) return true;
+        // return roleList.some((role) => roles.includes(role));
+        const { securities } = meta || {};
+        if (!securities) return true;
+        return securityList.some((sec) => securities.includes(sec));
       });
       //  If you are sure that you do not need to do background dynamic permissions, please comment the entire judgment below
     } else if (permissionMode === PermissionModeEnum.BACK) {

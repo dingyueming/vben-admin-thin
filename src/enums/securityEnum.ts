@@ -1,0 +1,25 @@
+export enum SecurityEnum {
+  USER_SERVICE_PROFILE_SELF = 'user.service.profile.self',
+  USER_SERVICE_PROFILE = 'user.service.profile',
+  USER_SERVICE_LIST = 'user.service.list',
+  USER_SERVICE_MODIFY_SELF = 'user.service.modify.self',
+  USER_SERVICE_MODIFY = 'user.service.modify',
+  USER_SERVICE_DELETE = 'user.service.delete',
+  USER_SERVICE_ADD = 'user.service.add',
+  USER_SERVICE_CHANGE_PASSWORD = 'user.service.change.password',
+  USER_SERVICE_ROLES_SELF = 'user.service.roles.self',
+  USER_SERVICE_ROLES = 'user.service.roles',
+  USER_SERVICE_SECURITIES_SELF = 'user.service.securities.self',
+  USER_SERVICE_SECURITIES = 'user.service.securities',
+
+  ROLE_SERVICE_LIST = 'role.service.list',
+  ROLE_SERVICE_ADD = 'role.service.add',
+  ROLE_SERVICE_MODIFY = 'role.service.modify',
+  ROLE_SERVICE_DELETE = 'role.service.delete',
+  ROLE_SERVICE_GIVE = 'role.service.give',
+
+  SECURITY_SERVICE_LIST = 'security.service.list',
+  SECURITY_SERVICE_GIVE = 'security.service.give',
+  SECURITY_SERVICE_REFRESH = 'security.service.refresh',
+  SECURITY_SERVICE_ALL = 'security.service.all',
+}

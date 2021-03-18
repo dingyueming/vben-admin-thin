@@ -16,6 +16,7 @@ import { RoleEnum } from '/@/enums/roleEnum';
 import { intersection } from 'lodash-es';
 import { isArray } from '/@/utils/is';
 import { tabStore } from '/@/store/modules/tab';
+import { SecurityEnum } from '/@/enums/securityEnum';
 
 // User permissions related operations
 export function usePermission() {
@@ -51,17 +52,27 @@ export function usePermission() {
   /**
    * Determine whether there is permission
    */
-  function hasPermission(value?: RoleEnum | RoleEnum[] | string | string[], def = true): boolean {
+  function hasPermission(
+    value?: RoleEnum | RoleEnum[] | SecurityEnum | SecurityEnum[] | string | string[],
+    def = true
+  ): boolean {
     const permMode = projectSetting.permissionMode;
     if (PermissionModeEnum.ROLE === permMode) {
       // Visible by default
+      // if (!value) {
+      //   return def;
+      // }
+      // if (!isArray(value)) {
+      //   return userStore.getRoleListState?.includes(value as RoleEnum);
+      // }
+      // return (intersection(value, userStore.getRoleListState) as RoleEnum[]).length > 0;
       if (!value) {
         return def;
       }
       if (!isArray(value)) {
-        return userStore.getRoleListState?.includes(value as RoleEnum);
+        return userStore.getSecurityListState?.includes(value as SecurityEnum);
       }
-      return (intersection(value, userStore.getRoleListState) as RoleEnum[]).length > 0;
+      return (intersection(value, userStore.getSecurityListState) as SecurityEnum[]).length > 0;
     }
     if (PermissionModeEnum.BACK === permMode) {
       // Visible by default

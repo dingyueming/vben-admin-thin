@@ -11,7 +11,7 @@ import { hotModuleUnregisterModule } from '/@/utils/helper/vuexHelper';
 
 import { PageEnum } from '/@/enums/pageEnum';
 import { RoleEnum } from '/@/enums/roleEnum';
-import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
+import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY, SECURITY_KEY } from '/@/enums/cacheEnum';
 
 import { useMessage } from '/@/hooks/web/useMessage';
 
@@ -22,6 +22,9 @@ import { loginApi, getUserInfoById } from '/@/api/sys/user';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
 import { getAuthCache, setAuthCache } from '/@/utils/auth/index';
+import { Security } from '/@/router/types';
+import { getSecurityListById } from '/@/api/sys/menu';
+import { SecurityEnum } from '/@/enums/securityEnum';
 
 const NAME = 'app-user';
 hotModuleUnregisterModule(NAME);
@@ -37,6 +40,9 @@ class User extends VuexModule {
   // roleList
   private roleListState: RoleEnum[] = [];
 
+  // securityList
+  private securityListState: SecurityEnum[] = [];
+
   get getUserInfoState(): UserInfo {
     return this.userInfoState || getAuthCache<UserInfo>(USER_INFO_KEY) || {};
   }
@@ -47,6 +53,12 @@ class User extends VuexModule {
 
   get getRoleListState(): RoleEnum[] {
     return this.roleListState.length > 0 ? this.roleListState : getAuthCache<RoleEnum[]>(ROLES_KEY);
+  }
+
+  get getSecurityListState(): SecurityEnum[] {
+    return this.securityListState.length > 0
+      ? this.securityListState
+      : getAuthCache<SecurityEnum[]>(SECURITY_KEY);
   }
 
   @Mutation
@@ -66,6 +78,12 @@ class User extends VuexModule {
   commitRoleListState(roleList: RoleEnum[]): void {
     this.roleListState = roleList;
     setAuthCache(ROLES_KEY, roleList);
+  }
+
+  @Mutation
+  commitSecurityListState(securityList: SecurityEnum[]): void {
+    this.securityListState = securityList;
+    setAuthCache(SECURITY_KEY, securityList);
   }
 
   @Mutation
@@ -108,8 +126,11 @@ class User extends VuexModule {
     const userInfo = await getUserInfoById({ userId });
     const { roles } = userInfo;
     const roleList = roles.map((item) => item.value) as RoleEnum[];
+    const securities = (await getSecurityListById({ id: userId })) as Security[];
+    const securityList = securities.map((item) => item.uniqueName) as SecurityEnum[];
     this.commitUserInfoState(userInfo);
     this.commitRoleListState(roleList);
+    this.commitSecurityListState(securityList);
     return userInfo;
   }
 
