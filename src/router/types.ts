@@ -2,6 +2,7 @@ import type { RouteRecordRaw } from 'vue-router';
 import { RoleEnum } from '/@/enums/roleEnum';
 
 import { defineComponent } from 'vue';
+import { SecurityEnum } from '../enums/securityEnum';
 
 export type Component<T extends any = any> =
   | ReturnType<typeof defineComponent>
@@ -15,6 +16,8 @@ export interface RouteMeta {
   ignoreAuth?: boolean;
   // role info
   roles?: RoleEnum[];
+  // security
+  securities?: SecurityEnum[];
   // Whether not to cache
   ignoreKeepAlive?: boolean;
   // Is it fixed on tab
@@ -82,6 +85,13 @@ export interface Menu {
   tag?: MenuTag;
 
   hideMenu?: boolean;
+}
+
+export interface Security{
+  id: number;
+  uniqueName: string;
+  remark: string;
+  enabled: boolean;
 }
 
 export interface MenuModule {
